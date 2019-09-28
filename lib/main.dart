@@ -15,7 +15,12 @@ class _HomeState extends State<Home> {
 
   String _Jk = ""; // _ berarti private
   List<String> agama=["Islam","Kristen","Hindu","Budha"];
+
   String _agama = "Islam";
+
+  TextEditingController controllerNama = new TextEditingController();
+  TextEditingController controllerPass = new TextEditingController();
+  TextEditingController controllerMoto = new TextEditingController();
 
   void _pilihJk(String value){
     setState(() {
@@ -27,6 +32,34 @@ class _HomeState extends State<Home> {
     setState(() {
      _agama=value; 
     });
+  }
+
+  void kirimdata(){
+    AlertDialog alertDialog = new AlertDialog(
+      content: new Container(
+        height: 200,
+        child: new Column(
+          children: <Widget>[
+            new Text(
+              "Nama LEngkap : ${controllerNama.text}"
+            ),
+            new Text(
+              "Password : ${controllerPass.text}"
+            ),
+            new Text(
+              "Moto Hidup : ${controllerMoto.text}"
+            ),
+            new Text(
+              "Jenis Kelamin : $_Jk"
+            ),
+            new Text(
+              "Agama: $agama"
+            ),
+          ],
+        ),
+      )
+    );
+    showDialog(context: context, child: alertDialog);
   }
 
   @override
@@ -45,6 +78,7 @@ class _HomeState extends State<Home> {
             child: new Column(
               children: <Widget>[
                 new TextField(
+                  controller: controllerNama,
                   decoration: new InputDecoration(
                     hintText: "Nama Lengkap",
                     labelText: "Nama Lengkap",
@@ -56,6 +90,7 @@ class _HomeState extends State<Home> {
 
                 new Padding(padding: new EdgeInsets.only(top: 20),),
                 new TextField(
+                  controller: controllerPass,
                   obscureText: true, //agar text **
                   decoration: new InputDecoration(
                     hintText: "Password",
@@ -68,6 +103,7 @@ class _HomeState extends State<Home> {
 
                 new Padding(padding: new EdgeInsets.only(top: 20),),
                 new TextField(
+                  controller: controllerMoto,
                   maxLines: 3,
                   decoration: new InputDecoration(
                     hintText: "Moto Hidup",
@@ -104,6 +140,7 @@ class _HomeState extends State<Home> {
                 new Row(
                   children: <Widget>[
                     new Text("Agama",style: new TextStyle(fontSize: 18,color: Colors.black),),
+                    new Padding(padding: new EdgeInsets.only(right: 10)),
                     new DropdownButton(
                       onChanged: (String value){
                         pilihAgama(value);
@@ -117,6 +154,12 @@ class _HomeState extends State<Home> {
                       }).toList(),
                     ),
                   ],
+                ),
+
+                new RaisedButton(
+                  child: new Text("Ok"),
+                  color: Colors.blue,
+                  onPressed: (){kirimdata();},
                 )
                 
               ],
